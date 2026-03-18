@@ -1,4 +1,4 @@
-raylib.h linguist-documentation
+libraylib.a linguist-documentation
 raymath.h linguist-documentation
 rlgl.h linguist-documentation
 libraylib.a linguist-vendored
