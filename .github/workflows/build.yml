@@ -3,7 +3,9 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-
+# BU KISMI EKLE:
+permissions:
+  contents: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
