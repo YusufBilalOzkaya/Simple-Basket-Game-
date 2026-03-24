@@ -5,7 +5,9 @@ on:
     branches: [ main ]
 # BU KISMI EKLE:
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
