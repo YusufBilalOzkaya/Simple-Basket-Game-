@@ -1,0 +1,41 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+
+      - name: Build with Emscripten
+        run: |
+          emcc main.cpp \
+            -I . \
+            -L . \
+            -lraylib \
+            -lm \
+            -s USE_GLFW=3 \
+            -s WASM=1 \
+            -s ASYNCIFY \
+            -s GL_ENABLE_GET_PROC_ADDRESS=1 \
+            -s ALLOW_MEMORY_GROWTH=1 \
+            --preload-file pota.png \
+            -o index.html \
+            --shell-file shell.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          include_files: |
+            index.html
+            index.js
+            index.wasm
+            index.data
