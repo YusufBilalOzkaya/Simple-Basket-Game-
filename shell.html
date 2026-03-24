@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Basket Oyunu</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; display: flex; flex-direction: column;
+           align-items: center; justify-content: center; height: 100vh; }
+    h1 { color: #f0a500; font-family: sans-serif; margin-bottom: 16px; font-size: 1.5rem; }
+    canvas { border: 3px solid #f0a500; border-radius: 8px; }
+    #status { color: #aaa; font-family: sans-serif; margin-top: 10px; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <h1>🏀 Basket Oyunu</h1>
+  <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+  <div id="status">Yükleniyor...</div>
+  <script>
+    var Module = {
+      canvas: document.getElementById('canvas'),
+      setStatus: function(text) {
+        document.getElementById('status').innerHTML = text || 'Oyna!';
+      }
+    };
+  </script>
+  {{{ SCRIPT }}}
+</body>
+</html>
