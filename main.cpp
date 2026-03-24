@@ -213,8 +213,8 @@ void GameLoop()
         DrawText("BASKET!", 320, 150, 50, ORANGE);
     }
     DrawTextureEx(potaResmi, potaPos, 0.0f, potaScale, WHITE);
-    DrawRectangleRec(basketAlani, Fade(GREEN, 0.3f));
-    DrawRectangleRec(fileGorselAlani, Fade(BLUE, 0.3f));
+    //DrawRectangleRec(basketAlani, Fade(GREEN, 0.3f)); yeşil alan
+    //DrawRectangleRec(fileGorselAlani, Fade(BLUE, 0.3f)); mavi alan
     EndDrawing();
 }
 
