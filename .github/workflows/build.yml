@@ -15,11 +15,11 @@ jobs:
 
       - name: Build Raylib for Web
         run: |
-          # Raylib kaynak kodunu indirip web için derliyoruz
           git clone --depth 1 https://github.com/raysan5/raylib.git raylib_src
           cd raylib_src/src
           make PLATFORM=PLATFORM_WEB -e
-          cp libraylib.a ../../libraylib_web.a
+          # Dikkat: Buradaki kaynak dosya ismini derleyicinin ürettiğiyle aynı yapıyoruz
+          cp libraylib.a ../../libraylib_web.a || cp libraylib.web.a ../../libraylib_web.a
           cd ../..
 
       - name: Build Project with Emscripten
