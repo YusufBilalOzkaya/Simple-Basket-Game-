@@ -3,14 +3,20 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-# BU KISMI EKLE:
+  workflow_dispatch: # Manuel tetikleme için (test amaçlı)
+
+# Gerekli tüm izinler burada tanımlı
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Setup Emscripten
         uses: mymindstorm/setup-emsdk@v14
@@ -20,13 +26,11 @@ jobs:
           git clone --depth 1 https://github.com/raysan5/raylib.git raylib_src
           cd raylib_src/src
           make PLATFORM=PLATFORM_WEB -e
-          # Dikkat: Buradaki kaynak dosya ismini derleyicinin ürettiğiyle aynı yapıyoruz
           cp libraylib.a ../../libraylib_web.a || cp libraylib.web.a ../../libraylib_web.a
           cd ../..
 
       - name: Build Project with Emscripten
         run: |
-          # Klasördeki eski libraylib.a yerine yeni derlenen libraylib_web.a kullanılıyor
           emcc main.cpp -o index.html \
             -I. -I./raylib_src/src \
             ./libraylib_web.a \
@@ -36,9 +40,17 @@ jobs:
             --preload-file pota.png \
             -DPLATFORM_WEB
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      # BURASI KRİTİK: Dosyaları paketle
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-         
+          # Sadece gereken dosyaları gönderiyoruz (./ noktası tüm klasörü kapsar)
+          path: '.'
+
+      # BURASI KRİTİK: Doğrudan yayına al
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
