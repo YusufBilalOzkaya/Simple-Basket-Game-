@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,29 +13,30 @@ jobs:
       - name: Setup Emscripten
         uses: mymindstorm/setup-emsdk@v14
 
-      - name: Build with Emscripten
+      - name: Build Raylib for Web
         run: |
-          emcc main.cpp \
-            -I . \
-            -L . \
-            -lraylib \
-            -lm \
-            -s USE_GLFW=3 \
-            -s WASM=1 \
-            -s ASYNCIFY \
+          # Raylib kaynak kodunu indirip web için derliyoruz
+          git clone --depth 1 https://github.com/raysan5/raylib.git raylib_src
+          cd raylib_src/src
+          make PLATFORM=PLATFORM_WEB -e
+          cp libraylib.a ../../libraylib_web.a
+          cd ../..
+
+      - name: Build Project with Emscripten
+        run: |
+          # Klasördeki eski libraylib.a yerine yeni derlenen libraylib_web.a kullanılıyor
+          emcc main.cpp -o index.html \
+            -I. -I./raylib_src/src \
+            ./libraylib_web.a \
+            -s USE_GLFW=3 -s WASM=1 -s ASYNCIFY \
             -s GL_ENABLE_GET_PROC_ADDRESS=1 \
             -s ALLOW_MEMORY_GROWTH=1 \
             --preload-file pota.png \
-            -o index.html \
-            --shell-file shell.html
+            -DPLATFORM_WEB
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
-          include_files: |
-            index.html
-            index.js
-            index.wasm
-            index.data
+          include_files: 'index.html,index.js,index.wasm,index.data,pota.png'
