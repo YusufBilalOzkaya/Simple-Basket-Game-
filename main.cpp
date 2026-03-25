@@ -27,7 +27,7 @@ public:
         {
             if (ballPos.y < rect.y || ballPos.y > rect.y + rect.height)
             {
-                ballVel.y *= -0.5f;
+                ballVel.y *= -0.7f;
                 if (ballPos.y < rect.y)
                     ballPos.y = rect.y - collisionRadius;
                 else
@@ -35,7 +35,7 @@ public:
             }
             else
             {
-                ballVel.x *= -0.5f;
+                ballVel.x *= -0.7f;
                 if (ballPos.x < rect.x)
                     ballPos.x = rect.x - collisionRadius;
                 else
@@ -103,7 +103,6 @@ void GameLoop()
         Vector2 MouseVelocity = {mousePosition.x - PrvMousePosition.x, mousePosition.y - PrvMousePosition.y};
         positions[activeball] = mousePosition;
         velocity[activeball] = MouseVelocity;
-    }
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
     {
         activeball = -1;
@@ -157,7 +156,7 @@ void GameLoop()
         if (positions[i].y + rad >= 450)
         {
             positions[i].y = 450 - rad;
-            velocity[i].y *= -0.6;
+            velocity[i].y *= -0.7;
         }
 
         if (ActiveWalls)
@@ -165,17 +164,17 @@ void GameLoop()
             if (positions[i].x + rad >= 800)
             {
                 positions[i].x = 800 - rad;
-                velocity[i].x *= -0.5f;
+                velocity[i].x *= -0.7f;
             }
             if (positions[i].x - rad <= 0)
             {
                 positions[i].x = rad;
-                velocity[i].x *= -0.5f;
+                velocity[i].x *= -0.7f;
             }
             if (positions[i].y - rad <= 0)
             {
                 positions[i].y = rad;
-                velocity[i].y *= -0.5f;
+                velocity[i].y *= -0.7f;
             }
         }
     }
