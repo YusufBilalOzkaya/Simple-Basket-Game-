@@ -157,7 +157,7 @@ void GameLoop()
         if (positions[i].y + rad >= 450)
         {
             positions[i].y = 450 - rad;
-            velocity[i].y *= -0.7;
+            velocity[i].y *= -0.3;
         }
 
         if (ActiveWalls)
@@ -165,7 +165,7 @@ void GameLoop()
             if (positions[i].x + rad >= 800)
             {
                 positions[i].x = 800 - rad;
-                velocity[i].x *= -0.7f;
+                velocity[i].x *= -0.3f;
             }
             if (positions[i].x - rad <= 0)
             {
