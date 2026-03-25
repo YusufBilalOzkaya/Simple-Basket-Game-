@@ -27,7 +27,7 @@ public:
         {
             if (ballPos.y < rect.y || ballPos.y > rect.y + rect.height)
             {
-                ballVel.y *= -0.7f;
+                ballVel.y *= -0.4f;
                 if (ballPos.y < rect.y)
                     ballPos.y = rect.y - collisionRadius;
                 else
@@ -35,7 +35,7 @@ public:
             }
             else
             {
-                ballVel.x *= -0.7f;
+                ballVel.x *= -0.4f;
                 if (ballPos.x < rect.x)
                     ballPos.x = rect.x - collisionRadius;
                 else
