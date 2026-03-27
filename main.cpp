@@ -102,7 +102,7 @@ void GameLoop()
     {
         Vector2 MouseVelocity = {mousePosition.x - PrvMousePosition.x, mousePosition.y - PrvMousePosition.y};
         positions[activeball] = mousePosition;
-        velocity[activeball] = MouseVelocity;
+        velocity[activeball] = MouseVelocity;}
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
     {
         activeball = -1;
